@@ -23,3 +23,7 @@
 #define WS2812_DI_PIN GP16
 // The number of LEDs connected
 #define RGB_MATRIX_LED_COUNT 20
+
+#define TAPPING_TERM 180
+#define QUICK_TAP_TERM 0
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD

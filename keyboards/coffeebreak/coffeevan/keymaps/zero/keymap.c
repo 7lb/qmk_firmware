@@ -6,22 +6,21 @@
 enum layers {
 	_BASE,
 	_SPACE,
-	_SHIFT,
+	_ALT,
 	_CTRL,
 };
 
-#define Z_SPC MO(_SPACE)
-#define Z_SFT MO(_SHIFT)
-#define Z_CTL MO(_CTRL)
-#define Z_A LGUI_T(KC_A)
-#define Z_S LALT_T(KC_S)
+#define ZL_SPC LT(_SPACE, KC_SPC)
+#define ZL_ALT MO(_ALT)
+#define ZL_CTL MO(_CTRL)
+#define Z_LSFT OSM(MOD_LSFT)
+#define Z_RSFT OSM(MOD_RSFT)
+#define Z_S LGUI_T(KC_S)
 #define Z_D LCTL_T(KC_D)
-#define Z_F LSFT_T(KC_F)
-#define Z_J RSFT_T(KC_J)
+#define Z_F LALT_T(KC_F)
+#define Z_J RALT_T(KC_J)
 #define Z_K RCTL_T(KC_K)
-#define Z_L RALT_T(KC_L)
-#define Z_SCLN RGUI_T(KC_SCLN)
-
+#define Z_L RGUI_T(KC_L)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -30,16 +29,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ├───┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬─────┤
 // │ Tb │ A │ S │ D │ F │ G │ H │ J │ K │ L │ ; │ Ent │
 // ├────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬───┤
-// │ LAY2 │ Z │ X │ C │ V │ B │ N │ M │ , │ . │ / │LA2│
+// │ Shft │ Z │ X │ C │ V │ B │ N │ M │ , │ . │ / │Sft│
 // ├────┬─┴─┬─┴──┬┴───┴───┴───┴───┴───┴───┼───┼───┼───┤
-// │LAY3│   │    │      Space / LAY1      │   │   │LA3│
+// │CtrL│   │AltL│      Space / SpcL      │AlL│Rbt│CtL│
 // └────┴───┴────┴────────────────────────┴───┴───┴───┘
 
 [_BASE] = LAYOUT_solid_space(
 	KC_ESC, KC_Q,  KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I,    KC_O,   KC_P,    KC_BSPC,
-	KC_TAB, Z_A,   Z_S,  Z_D,  Z_F,  KC_G, KC_H, Z_J,  Z_K,     Z_L,    Z_SCLN,  KC_ENT,
-	Z_SFT,  KC_Z,  KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, Z_SFT,
-	Z_CTL,  KC_NO, KC_NO,                KC_SPC,                KC_NO,  KC_NO,   Z_CTL
+	KC_TAB, KC_A,  Z_S,  Z_D,  Z_F,  KC_G, KC_H, Z_J,  Z_K,     Z_L,    KC_SCLN, KC_ENT,
+	Z_LSFT, KC_Z,  KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, Z_RSFT,
+	ZL_CTL, KC_NO, ZL_ALT,                ZL_SPC,               ZL_ALT, QK_BOOT, ZL_CTL
 ),
 
 // ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬──────┐
@@ -64,16 +63,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ├───┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬─────┤
 // │    │   │ [ │ { │ ( │ ' │ " │ ) │ } │ ] │   │     │
 // ├────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬───┤
-// │ Trns │   │   │ ^ │ @ │ & │ | │ ? │ # │   │   │Trn│
+// │      │   │   │ ^ │ @ │ & │ | │ ? │ # │   │   │   │
 // ├────┬─┴─┬─┴──┬┴───┴───┴───┴───┴───┴───┼───┼───┼───┤
-// │    │   │    │         Delete         │   │   │   │
+// │    │   │Trns│         Delete         │Trn│   │   │
 // └────┴───┴────┴────────────────────────┴───┴───┴───┘
 
-[_SHIFT] = LAYOUT_solid_space(
+[_ALT] = LAYOUT_solid_space(
 	KC_TILD, KC_PERC, KC_DLR, KC_BSLS, KC_MINS, KC_EXLM, KC_PEQL, KC_PPLS, KC_PAST, KC_UNDS, KC_NO, KC_GRV,
 	KC_NO,   KC_NO, KC_LBRC,  KC_LCBR, KC_LPRN, KC_QUOT, KC_DQUO, KC_RPRN, KC_RCBR, KC_RBRC, KC_NO, KC_NO,
-	KC_TRNS, KC_NO, KC_NO,    KC_CIRC, KC_AT,   KC_AMPR, KC_PIPE, KC_QUES, KC_HASH, KC_NO,   KC_NO, KC_TRNS,
-	KC_NO,   KC_NO, KC_NO,                        KC_DELETE,                        KC_NO,   KC_NO,  KC_NO
+	KC_NO,   KC_NO, KC_NO,    KC_CIRC, KC_AT,   KC_AMPR, KC_PIPE, KC_QUES, KC_HASH, KC_NO,   KC_NO, KC_NO,
+	KC_NO,   KC_NO, KC_TRNS,                       KC_DELETE,                       KC_TRNS, KC_NO, KC_NO
 ),
 
 // ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬──────┐
